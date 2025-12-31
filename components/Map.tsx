@@ -62,12 +62,19 @@ export const MapComponent = ({ markers }: MapProps) => {
           <InfoWindow
             position={{ lat: selected.lat!, lng: selected.long! }}
             onCloseClick={() => setSelected(null)}
+            headerContent={
+              <h1 className="font-semibold text-slate-800 mb-1">
+                <a
+                  href={`https://www.google.com/maps/place/?q=place_id:${selected.google_maps_place_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {selected.name ?? "Restaurant"}
+                </a>
+              </h1>
+            }
           >
             <div className="max-w-xs">
-              <h3 className="font-semibold text-slate-700 mb-1">
-                {selected.name ?? "Restaurant"}
-              </h3>
-
               <p className="text-sm font-medium text-amber-600 mb-1">
                 Rating: {selected.review!.toFixed(1)}
               </p>

@@ -24,3 +24,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.chulapa-ligatures {
+  font-feature-settings: "dlig" 1;
+}

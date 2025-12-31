@@ -1,20 +1,6 @@
-import localFont from "next/font/local";
+import { chulapa } from "@/app/fonts";
+import Image from "next/image";
 import Link from "next/link";
-
-const chulapa = localFont({
-  src: [
-    {
-      path: "../public/fonts/Chulapa-Regular.otf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/Chulapa-Bold.otf",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-});
 
 const UserIcon = () => (
   <svg
@@ -38,11 +24,15 @@ export const Navbar = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a
           href="https://mrnxn.vercel.app/"
-          className={
-            chulapa.className +
-            "flex items-center space-x-3 rtl:space-x-reverse"
-          }
+          className={`${chulapa.className} chulapa-ligatures flex items-center space-x-3 rtl:space-x-reverse`}
         >
+          <Image
+            width={30}
+            height={30}
+            src="/images/logo.png"
+            alt="Mrnxn Logo"
+            className="mr-4"
+          />
           Mrnxn.
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
