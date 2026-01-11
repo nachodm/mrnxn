@@ -44,7 +44,7 @@ export const ViewToggleButton = ({
   return (
     <button
       onClick={onToggle}
-      className="fixed bottom-[10%] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 rounded-full bg-stone-100 px-6 py-3 text-black cursor-pointer transition-colors hover:bg-blue-200 active:bg-blue-800 shadow-lg hover:shadow-xl"
+      className="fixed bottom-[10%] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 rounded-full bg-stone-100 px-6 py-3 text-black cursor-pointer transition-colors hover:bg-slate-200 active:bg-slate-300 shadow-lg hover:shadow-xl"
       aria-label={isMapView ? "Go to list view" : "Go to map view"}
     >
       {isMapView ? (

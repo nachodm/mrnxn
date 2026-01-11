@@ -1,21 +1,40 @@
 "use client";
 import { useState, FormEvent, ChangeEvent } from "react";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const supabase = createClient();
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
     try {
-      // Add your login logic here
-      console.log("Login attempt:", { email, password, rememberMe });
-      // Example: await loginAPI(email, password);
+      const { data, error: authError } = await supabase.auth.signInWithPassword(
+        {
+          email,
+          password,
+        }
+      );
+
+      if (authError) {
+        setError(authError.message);
+        return;
+      }
+
+      if (data.user) {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Login failed:", error);
+      setError("An unexpected error occurred");
     } finally {
       setIsLoading(false);
     }
@@ -98,16 +117,17 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className="text-white bg-brand box-border border border-transparent cursor-pointer hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none w-full mb-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-black bg-white hover:bg-slate-200 activate:bg-slate-300 box-border border border-transparent cursor-pointer focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none w-full mb-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "Logging in..." : "Login"}
           </button>
-          <div className="text-sm font-medium text-body">
+          {error && <div className="text-sm text-red-500 mb-3">{error}</div>}
+          {/* <div className="text-sm font-medium text-body">
             Not registered?{" "}
             <a href="#" className="text-fg-brand hover:underline">
               Create account
             </a>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
